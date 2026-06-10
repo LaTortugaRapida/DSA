@@ -7,8 +7,8 @@ class Node {
 
 class SinglyLinkedList {
   #head;
-  constructor(head = null) {
-    this.#head = head;
+  constructor(value = null) {
+    this.#head = value !== null ? new Node(value) : null;
   }
 
   empty() {
@@ -214,4 +214,3 @@ class SinglyLinkedList {
     }
   }
 }
-
