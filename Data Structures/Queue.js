@@ -14,8 +14,9 @@ class Queue {
   }
 
   dequeue() {
+    const val = this.#data.pop_front();
      --this.#size;
-     return this.#data.pop_front();
+     return val;
   }
 
   front() {
