@@ -7,8 +7,10 @@ class Node {
 
 class SinglyLinkedList {
   #head;
+  #size;
   constructor(value = null) {
     this.#head = value !== null ? new Node(value) : null;
+    this.#size = 0;
   }
 
   empty() {
@@ -16,19 +18,12 @@ class SinglyLinkedList {
   }
 
   size() {
-    if (this.empty()) return 0;
-    if (!this.#head.next) return 1;
-    let size = 0;
-    let node = this.#head;
-    while (node) {
-      ++size;
-      node = node.next;
-    }
-    return size;
+    return this.#size;
   }
 
   clear() {
     this.#head = null;
+    this.#size = 0;
   }
 
   front() {
@@ -49,7 +44,7 @@ class SinglyLinkedList {
     if (!Number.isInteger(index) || index < 0)
       throw new Error("Index must be a positive integer!");
     if (this.empty()) throw new Error("List is empty!");
-    if (index >= this.size()) throw new Error("Invalid index!");
+    if (index >= this.#size) throw new Error("Invalid index!");
     let node = this.#head;
     while (index--) {
       node = node.next;
@@ -61,58 +56,58 @@ class SinglyLinkedList {
     let newNode = new Node(value);
     if (this.empty()) {
       this.#head = newNode;
-      return;
+    } else {
+        let tmp = this.#head;
+        this.#head = newNode;
+        newNode.next = tmp;
     }
-    let tmp = this.#head;
-    this.#head = newNode;
-    newNode.next = tmp;
+    ++this.#size;
   }
 
   pushBack(value) {
     let newNode = new Node(value);
     if (this.empty()) {
       this.#head = newNode;
-      return;
+    } else {
+        let node = this.#head;
+        while (node.next) {
+            node = node.next;
+        }
+        node.next = newNode;
     }
-    let node = this.#head;
-    while (node.next) {
-      node = node.next;
-    }
-    node.next = newNode;
+    ++this.#size;
   }
 
   popFront() {
     if (this.empty()) throw new Error("List is empty!");
-    if (this.size() === 1) {
-      let tmp = this.#head;
-      this.#head = null;
-      return tmp;
-    }
-    let tmp = this.#head;
+    const val = this.#head.value;
     this.#head = this.#head.next;
-    return tmp;
+    --this.#size;
+    return val;
   }
 
   popBack() {
     if (this.empty()) throw new Error("List is empty!");
-    if (this.size() === 1) {
-      let tmp = this.#head;
+    if (this.#size === 1) {
+      const val = this.#head.value;
       this.#head = null;
-      return tmp;
+      this.#size = 0;
+      return val;
     }
     let node = this.#head;
     while (node.next.next) {
       node = node.next;
     }
-    let tmp = node.next;
+    const val = node.next.value;
     node.next = null;
-    return tmp;
+    --this.#size;
+    return val;
   }
 
   insert(index, value) {
     if (!Number.isInteger(index) || index < 0)
       throw new Error("Index must be a positive integer!");
-    if (index > this.size()) throw new Error("Invalid index!");
+    if (index > this.#size) throw new Error("Invalid index!");
     if (index === 0) {
       this.pushFront(value);
       return;
@@ -126,6 +121,7 @@ class SinglyLinkedList {
     let next = prev.next;
     prev.next = newNode;
     newNode.next = next;
+    ++this.#size;
   }
 
   erase(index) {
@@ -143,9 +139,10 @@ class SinglyLinkedList {
       prev = prev.next;
       --index;
     }
-    let tmp = prev.next;
+    let val = prev.next.value;
     prev.next = prev.next.next || null;
-    return tmp;
+    --this.#size
+    return val;
   }
 
   find(value) {
@@ -184,7 +181,7 @@ class SinglyLinkedList {
 
   reverse() {
     if (this.empty()) throw new Error("List is empty!");
-    if (this.size() === 1) return;
+    if (this.#size === 1) return;
     let cur = this.#head;
     let next = cur.next;
     let prev = null;
