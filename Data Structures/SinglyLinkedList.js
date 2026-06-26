@@ -127,11 +127,11 @@ class SinglyLinkedList {
   erase(index) {
     if (!Number.isInteger(index) || index < 0)
       throw new Error("Index must be a positive integer!");
-    if (index >= this.size()) throw new Error("Invalid index!");
+    if (index >= this.#size) throw new Error("Invalid index!");
     if (index === 0) {
       return this.popFront();
     }
-    if (index === this.size() - 1) {
+    if (index === this.#size - 1) {
       return this.popBack();
     }
     let prev = this.#head;
