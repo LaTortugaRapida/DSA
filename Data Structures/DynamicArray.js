@@ -35,6 +35,9 @@ export class DArray {
         return this.#capacity;
     }
 
+    get size() {
+        return this.#size;
+    }
     /**
      * Changes the capacity of the internal array.
      * @param {number} newCapacity - The new capacity of the array.
@@ -138,9 +141,6 @@ export class DArray {
      * Clears the array (logically, by resetting the size to 0).
      */
     clear() {
-        if (this.empty()) {
-            throw new Error("The array is empty!");
-        }
         this.#size = 0;
         this.#arr.fill(0);
     }
@@ -151,9 +151,6 @@ export class DArray {
      * @param {number} value - The new value.
      */
     setValue(i, value) {
-        if (this.empty()) {
-            throw new Error("The array is empty!");
-        }
         if (!Number.isInteger(i)) {
             throw new TypeError("Index must be a positive integer!");
         }
@@ -192,7 +189,7 @@ export class DArray {
      * Returns the current capacity of the array.
      * @returns {number} The capacity.
      */
-    capacity() {
+    getCapacity() {
         return this.#capacity;
     }
 
@@ -200,7 +197,7 @@ export class DArray {
      * Returns the current size of the array.
      * @returns {number} The size.
      */
-    size() {
+    getSize() {
         return this.#size;
     }
 
