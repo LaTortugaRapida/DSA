@@ -2,7 +2,7 @@
  * Class representing a "Dynamic Array" data structure.
  * Uses a typed array (Uint32Array) as internal storage.
  */
-class DArray {
+export class DArray {
     // Private fields
     /** @private @type {number} Current number of elements in the array */
     #size = 0;
@@ -23,20 +23,15 @@ class DArray {
      * @throws {TypeError} If initialCapacity is not a positive integer.
      */
     constructor(initialCapacity) {
-        this.initialCapacity = initialCapacity;
-    }
-
-    set initialCapacity(num) {
-        if (!Number.isInteger(num) || num <= 0) {
+        if (!Number.isInteger(initialCapacity) || initialCapacity <= 0) {
             throw new TypeError("Capacity must be a positive integer!");
         }
-        this.#capacity = num;
+        this.#capacity = initialCapacity;
         this.#size = 0;
-        this.#arr = new Uint32Array(num);
-        this.#arr.fill(0);
+        this.#arr = new Uint32Array(initialCapacity);
     }
 
-    get initialCapacity() {
+    get capacity() {
         return this.#capacity;
     }
 
