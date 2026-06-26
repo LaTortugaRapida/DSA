@@ -1,4 +1,4 @@
-class BucketedDeque {
+export class BucketedDeque {
   // === State ===
   #everyBucketsLength = 8;
   #bucketSize;
